@@ -4,6 +4,13 @@
 </head>
 <body>
     <h1>Language Classifier</h1>
-    <textarea default="Put code here."></textarea>
+    <form method="POST">
+        <input name = "item_text" id="id_new_item" placeholder = "Enter some code"/>
+        {% csrf_token %}
+    </form>
+
+    {% if code_result %}
+      <p>{{code_result}}</p>
+    {% endif %}
 </body>
 </html>

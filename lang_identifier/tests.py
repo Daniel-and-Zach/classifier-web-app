@@ -17,3 +17,11 @@ class HomePageTest(TestCase):
         expected_html = render_to_string('index.html')
         self.assertEquals(response.content.decode(), expected_html)
 
+    def test_home_page_redirects_on_POST(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['users_code'] ='def my_function(): pass'
+        response = index(request)
+
+        self.assertEqual(response.status_code, 302)
+        self.assetEqual(response['location'], '/')
