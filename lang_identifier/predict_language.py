@@ -27,8 +27,7 @@ def clean_probabilities(probabilities):
 def present_percent(probabilities):
     tuples = list(zip(languages, clean_probabilities(probabilities)))
     sorted_list = sorted(tuples, key=lambda x: x[1], reverse=True)
-
-    return [sorted_list[0:3]]
+    return sorted_list[0:3]
 
 
 def make_prediction(test_file):
