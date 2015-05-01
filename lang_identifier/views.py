@@ -15,3 +15,8 @@ def analyze(request):
     word = {"code_result": request.POST["item_text"]}
     CodeSnippet.objects.create(code=text,answer=predictions[0][0])
     return render(request, 'index.html', context)
+
+def confim(request):
+    confrimation = request.POST['confirmation']
+    code_snippit = request.POST['code_snippet']
+    if confrimation == 'Yes':

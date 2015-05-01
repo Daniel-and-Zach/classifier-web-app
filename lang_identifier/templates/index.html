@@ -17,6 +17,19 @@
           {% endfor %}
         </ul>
       </div>
+          <div>
+          <p>
+              Was this correct?
+          </p>
+              <select name="select">
+          <option value="Don't Know">I Don't Know</option>
+                  <option value="Yes" selected>Yes</option>
+                  <option value="No">No</option>
+    </select>
+          <form method="POST" action = "{% url 'code_confirm' %}">
+              <input name='code_confirm' id="confirmation" placeholder="Yes"/>
+          </form>
+          </div>
       {% endif %}
 </body>
 </html>
