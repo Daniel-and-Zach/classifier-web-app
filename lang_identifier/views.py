@@ -9,6 +9,7 @@ def index(request):
 
 def analyze(request):
     text = request.POST['item_text']
+    make_prediction_from_text(text)
     context = {"code_result": make_prediction_from_text(text)}
     word = {"code_result": request.POST["item_text"]}
     return render(request, 'index.html', context)

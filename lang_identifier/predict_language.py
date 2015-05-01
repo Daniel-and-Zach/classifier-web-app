@@ -1,6 +1,6 @@
 from .bernoulli_feature_maker import b_add_to_df
 from textblob import TextBlob
-from collections import Counter
+from collections import Counter, namedtuple
 import pandas as pd
 import sys
 import pickle
@@ -18,19 +18,17 @@ def make_temp_df(text):
     return temp_df
 
 
-def present_percent(probabilites):
-    tuples = list(zip(languages, probabilites.tolist()[0]))
+def clean_probabilities(probabilities):
+    whole_number_probabilities = map(lambda x: x * 100, probabilities.tolist()[0])
+    rounded_probabilities = [round(x, 2) for x in whole_number_probabilities]
+    return rounded_probabilities
+
+
+def present_percent(probabilities):
+    tuples = list(zip(languages, clean_probabilities(probabilities)))
     sorted_list = sorted(tuples, key=lambda x: x[1], reverse=True)
-    first_lang, first_num = sorted_list[0]
-    second_lang, second_num = sorted_list[1]
-    third_lang, third_num = sorted_list[2]
-    top_three = ("Most likely languages...\n",
-                 "1. {}: {}%\n".format(first_lang, round(first_num * 100, 1)),
-                 "2. {}: {}%\n".format(second_lang, round(second_num * 100, 1)),
-                    "3. {}: {}%".format(third_lang, round(third_num * 100, 1)))
-    return top_three
 
-
+    return [sorted_list[0:3]]
 
 
 def make_prediction(test_file):
@@ -55,7 +53,7 @@ def make_prediction_from_text(text):
     prediction = classifier.predict(temp_df.loc[0::,'Object':"php"])
     probability = classifier.predict_proba(temp_df.loc[0::,'Object':"php"])
     top_three = present_percent(probability)
-    return top_three, "I predict the language is: {}".format(prediction[0])
+    return top_three
 
 if __name__ == '__main__':
     text = sys.argv[1]
