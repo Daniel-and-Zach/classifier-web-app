@@ -11,12 +11,9 @@ def index(request):
 def analyze(request):
     text = request.POST['item_text']
     predictions = make_prediction_from_text(text)
-    context = {"code_result": predictions}
     word = {"code_result": request.POST["item_text"]}
-    CodeSnippet.objects.create(code=text,answer=predictions[0][0])
-    return render(request, 'index.html', context)
+    q=CodeSnippet.objects.create(code=text,answer=predictions[0][0])
+    request.session['code_id'] = q.id
+    context = {"code_result": predictions}
 
-def confim(request):
-    confrimation = request.POST['confirmation']
-    code_snippit = request.POST['code_snippet']
-    if confrimation == 'Yes':
+    return render(request, 'index.html', context)
