@@ -7,10 +7,16 @@
     <form method="POST" action = "{% url 'analyze' %}">
         <input name = "item_text" id="id_new_item" placeholder = "Enter some code"/>
         {% csrf_token %}
-    </form>
 
-    {% if code_result %}
-      <p>{{code_result}}</p>
-    {% endif %}
+    </form>
+      {% if code_result %}
+      <div>
+        <ul>
+          {% for code in code_result %}
+          <li>{{code.0}}: {{code.1}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
 </body>
 </html>
